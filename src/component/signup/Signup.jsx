@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { MDBBtn, MDBContainer, MDBCard, MDBCardBody, MDBInput, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { object, string } from 'yup';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Signup() {
   const [user, setUser] = useState({
@@ -60,21 +62,24 @@ function Signup() {
         formData.append('password', user.password);
         formData.append('image', user.image);
 
-        const { data } = await axios.post('https://ecommerce-node4.vercel.app/auth/signup', formData);
-        console.log('Server response:', data);
+        const response = await axios.post('https://ecommerce-node4.vercel.app/auth/signup', formData);
 
-        if (data.message === 'success') {
-        
-          console.log('Signup successful:', data);
+        if (response.status === 201 && response.data.message === 'success') {
+          toast.success('Signup successful!');
+          console.log('Signup successful:', response.data.createUser);
         } else {
-         
-          console.error('Signup failed:', data);
+          toast.error('Signup failed. Please try again.');
+          console.error('Signup failed. Server responded with:', response.status, response.data);
         }
       } catch (error) {
         console.error('Error submitting form:', error.message);
 
         if (error.response) {
-          console.log('Server responded with:', error.response.data);
+          toast.error(`Server responded with: ${error.response.status} ${error.response.data.message}`);
+          console.log('Server responded with:', error.response.status, error.response.data);
+        } else {
+          toast.error('An unexpected error occurred. Please try again.');
+          console.error('An unexpected error occurred:', error.message);
         }
       } finally {
         setLoader(false);
@@ -149,6 +154,7 @@ function Signup() {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+      <ToastContainer />
     </form>
   );
 }

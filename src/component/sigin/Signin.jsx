@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
-import "./signin.module.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './signin.module.css';
 
 function Signin() {
   const navigate = useNavigate();
@@ -27,21 +29,21 @@ function Signin() {
       const { data } = await axios.post('https://ecommerce-node4.vercel.app/auth/signin', user);
 
       if (data.message === 'success') {
-  
+        toast.success('Login successful!');
         console.log('Login successful:', data);
-        navigate('/signup'); 
+        navigate('/signup');
       } else {
-       
+        toast.error('Login failed. Please check your credentials.');
         console.error('Login failed:', data);
-       
       }
     } catch (error) {
       console.error('Error submitting login form:', error);
 
       if (error.response) {
+        toast.error(`Server responded with: ${error.response.status} ${error.response.data.message}`);
         console.log('Server responded with:', error.response.data);
       } else {
-        // Handle other types of errors (e.g., network issues)
+        toast.error('An error occurred while processing your request. Please try again.');
         console.error('An error occurred while processing your request:', error.message);
       }
     }
@@ -71,6 +73,7 @@ function Signin() {
           </form>
         </MDBCol>
       </MDBRow>
+      <ToastContainer />
     </MDBContainer>
   );
 }
