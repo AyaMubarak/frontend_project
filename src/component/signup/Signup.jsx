@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useState } from 'react';
-
 import { MDBBtn, MDBContainer, MDBCard, MDBCardBody, MDBInput, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { object, string } from 'yup';
 
@@ -62,15 +61,21 @@ function Signup() {
         formData.append('image', user.image);
 
         const { data } = await axios.post('https://ecommerce-node4.vercel.app/auth/signup', formData);
-        console.log(data);
+        console.log('Server response:', data);
+
+        if (data.message === 'success') {
         
+          console.log('Signup successful:', data);
+        } else {
+         
+          console.error('Signup failed:', data);
+        }
       } catch (error) {
         console.error('Error submitting form:', error.message);
 
         if (error.response) {
           console.log('Server responded with:', error.response.data);
         }
-        
       } finally {
         setLoader(false);
         setUser({
