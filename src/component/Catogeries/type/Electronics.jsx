@@ -1,21 +1,31 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText } from 'mdb-react-ui-kit';
-import style from '../type.module.css';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import {
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardImage,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+} from "mdb-react-ui-kit";
+import style from "../type.module.css";
 
-function Electronics() {
+function Electrincs() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://ecommerce-node4.vercel.app/products/category/656b5d0c7ef25cbb5771637a');
+        const response = await axios.get(
+          "https://ecommerce-node4.vercel.app/products/category/656b5d0c7ef25cbb5771637a"
+        );
         setProducts(response.data.products || []);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         setLoading(false);
       }
     };
@@ -28,27 +38,30 @@ function Electronics() {
       {loading ? (
         <div className={style.loader} />
       ) : (
-        <MDBRow className='row-cols-1 row-cols-md-2 g-4'>
+        <MDBRow className="row-cols-1 row-cols-md-2 g-4">
           {Array.isArray(products) && products.length > 0 ? (
             products.map((product) => (
               <MDBCol key={product._id}>
-                <Link to={`/products/${product._id}`} className='text-decoration-none'>
-                  <MDBCard style={{ width: '100%' }}>
+                <Link
+                  to={`/products/${product._id}`}
+                  className="text-decoration-none"
+                >
+                  <MDBCard style={{ width: "100%" }}>
                     {product.mainImage && product.mainImage.secure_url ? (
                       <MDBCardImage
                         src={product.mainImage.secure_url}
                         alt={product.name}
-                        position='top'
-                        style={{ height: '200px', objectFit: 'contain' }}
+                        position="top"
+                        style={{ height: "200px", objectFit: "contain" }}
                       />
                     ) : (
-                      {/* Use a fallback image or handle accordingly */}
+                      {}
                     )}
                     <MDBCardBody>
                       <MDBCardTitle>{product.name}</MDBCardTitle>
                       <MDBCardText>{product.price}$</MDBCardText>
-                      <Link to='/cart' className='text-decoration-none'>
-                        <button className='btn btn-primary'>Add To Cart</button>
+                      <Link to="/cart" className="text-decoration-none">
+                        <button className="btn btn-primary">Add To Cart</button>
                       </Link>
                     </MDBCardBody>
                   </MDBCard>
@@ -64,4 +77,4 @@ function Electronics() {
   );
 }
 
-export default Electronics;
+export default Electrincs;

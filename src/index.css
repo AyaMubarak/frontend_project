@@ -1,0 +1,19 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+nav, swiper , Swiper,SwiperSlide,div{
+  margin-bottom:20px;  
+}
+nav div {
+  margin:0;
+}
+footer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-height:100vh;
+  margin-top: 40px;
+  margin-bottom:0;
+}

@@ -1,12 +1,14 @@
-import Catogeries from "../Catogeries/Catogeries" 
-import Product from "../product/Product"
+import Catogeries from "../Catogeries/Catogeries";
+import Product from "../product/Product";
+import Header from "../Header/Header";
 function Home() {
   return (
-   <>
-<Catogeries/>
-<Product/>
-   </>
-  )
+    <>
+      <Header />
+      <Catogeries />
+      <Product />
+    </>
+  );
 }
 
-export default Home
+export default Home;

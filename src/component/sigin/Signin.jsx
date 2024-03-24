@@ -1,18 +1,17 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './signin.module.css';
-
+import { Link, useNavigate } from 'react-router-dom'; 
+import { MDBContainer, MDBCol, MDBRow, MDBBtn, MDBInput } from 'mdb-react-ui-kit';
+import { UserContext } from '../Navbar/UserContext';
+import { toast, Bounce } from 'react-toastify';
 function Signin() {
-  const navigate = useNavigate();
-
+  const { setUserToken } = useContext(UserContext);
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
+
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,26 +25,26 @@ function Signin() {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('https://ecommerce-node4.vercel.app/auth/signin', user);
+      const response = await axios.post("https://ecommerce-node4.vercel.app/auth/signin", user);
+      const data = response.data;
 
       if (data.message === 'success') {
-        toast.success('Login successful!');
         console.log('Login successful:', data);
-        navigate('/signup');
+        localStorage.setItem("userToken", data.token);
+        toast.success("Login successful!")
+      
+        setUserToken(data.token);
+        navigate('/');
+      } else if (data.message === 'plz confirm your email') {
+        toast.error('plz confirm your email')
       } else {
-        toast.error('Login failed. Please check your credentials.');
         console.error('Login failed:', data);
+        toast.error('Login failed ',data)
       }
     } catch (error) {
       console.error('Error submitting login form:', error);
-
-      if (error.response) {
-        toast.error(`Server responded with: ${error.response.status} ${error.response.data.message}`);
-        console.log('Server responded with:', error.response.data);
-      } else {
-        toast.error('An error occurred while processing your request. Please try again.');
-        console.error('An error occurred while processing your request:', error.message);
-      }
+      console.log('Server responded with:', error.response.data);
+      toast.error('Server responded with:',error)
     }
   };
 
@@ -53,27 +52,25 @@ function Signin() {
     <MDBContainer fluid className="p-3 my-5 h-custom">
       <MDBRow>
         <MDBCol col='10' md='6'>
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" className="img-fluid" alt="Sample image" />
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" className="img-fluid" alt="Login Illustration" />
         </MDBCol>
 
         <MDBCol col='4' md='6'>
           <form onSubmit={handleSubmit}>
-            <MDBInput wrapperClass='mb-4' label='Email address' id='email' type='email' size="lg" name="email" value={user.email} onChange={handleChange} />
-            <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' size="lg" name="password" value={user.password} onChange={handleChange} />
+            <MDBInput wrapperClass='mb-4' label='Email address' id='email' type='email' size="lg" name="email" value={user.email} onChange={handleChange} required />
+            <MDBInput wrapperClass='mb-4' label='Password' id='password' type='password' size="lg" name="password" value={user.password} onChange={handleChange} required />
 
             <div className="d-flex justify-content-between mb-4">
-              <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
-              <a href="!#">Forgot password?</a>
+              <Link to="/forget">Forgot password?</Link>
             </div>
 
             <div className='text-center text-md-start mt-4 pt-2'>
               <MDBBtn className="mb-0 px-5" size='lg' type='submit'>Login</MDBBtn>
-              <p className="small fw-bold mt-2 pt-1 mb-2">Donot have an account? <Link to={`/signup`} className="link-danger">Register</Link></p>
+              <p className="small fw-bold mt-2 pt-1 mb-2">Don't have an account? <Link to={`/signup`} className="link-danger">Register</Link></p>
             </div>
           </form>
         </MDBCol>
       </MDBRow>
-      <ToastContainer />
     </MDBContainer>
   );
 }

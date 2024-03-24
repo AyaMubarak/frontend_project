@@ -1,16 +1,17 @@
-import  { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 import {
+  MDBRow,
+  MDBCol,
   MDBCard,
   MDBCardImage,
   MDBCardBody,
   MDBCardTitle,
-  MDBBtn,
-  MDBRow,
-  MDBCol
-} from 'mdb-react-ui-kit';
-import style from '../type.module.css';
+  MDBCardText,
+} from "mdb-react-ui-kit";
+import style from "../type.module.css";
 
 function Man() {
   const [products, setProducts] = useState([]);
@@ -19,11 +20,20 @@ function Man() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://ecommerce-node4.vercel.app/products/category/656afd2a5f24a07ecd5a5090');
+        const token = localStorage.getItem("token");
+
+        const response = await axios.get(
+          "https://ecommerce-node4.vercel.app/products/category/656afd2a5f24a07ecd5a5090",
+          {
+            headers: {
+              Authorization: `Tariq_${token}`,
+            },
+          }
+        );
         setProducts(response.data.products || []);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         setLoading(false);
       }
     };
@@ -36,36 +46,32 @@ function Man() {
       {loading ? (
         <div className={style.loader} />
       ) : (
-        <MDBRow className="g-4">
+        <MDBRow className="row-cols-1 row-cols-md-2 g-4">
           {Array.isArray(products) && products.length > 0 ? (
             products.map((product) => (
               <MDBCol key={product._id}>
-                <Link to={`/products/${product._id}`} className="text-decoration-none">
-                  <MDBCard className="h-100">
-                    {product.mainImage && product.mainImage.secure_url ? (
-                      <MDBCardImage
-                        src={product.mainImage.secure_url}
-                        alt={product.name}
-                        position="top"
-                      />
-                    ) : (
-                      <MDBCardImage
-                        src="fallback_image_url"
-                        alt={product.name}
-                        position="top"
-                      />
-                    )}
-                    <MDBCardBody className="d-flex flex-column">
-                      <div className={style.cardTitle}>
-                        <MDBCardTitle>{product.name}</MDBCardTitle>
-                        <MDBCardTitle className={style.price}>{product.price}$</MDBCardTitle>
-                      </div>
-                      <Link to="/cart">
-                        <MDBBtn color="primary">Add To cart</MDBBtn>
-                      </Link>
-                    </MDBCardBody>
-                  </MDBCard>
-                </Link>
+                <MDBCard style={{ width: "100%" }}>
+                  {product.mainImage && product.mainImage.secure_url ? (
+                    <MDBCardImage
+                      src={product.mainImage.secure_url}
+                      alt={product.name}
+                      position="top"
+                      style={{ height: "200px", objectFit: "contain" }}
+                    />
+                  ) : (
+                    {}
+                  )}
+                  <MDBCardBody>
+                    <MDBCardTitle>{product.name}</MDBCardTitle>
+                    <MDBCardText>{product.price}$</MDBCardText>
+                    <Link
+                      to={`/products/${product._id}`}
+                      className="text-decoration-none"
+                    >
+                      <button className="btn btn-primary">View Details</button>
+                    </Link>
+                  </MDBCardBody>
+                </MDBCard>
               </MDBCol>
             ))
           ) : (

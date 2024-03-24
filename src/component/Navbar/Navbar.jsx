@@ -1,88 +1,250 @@
-import { NavLink} from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "bootstrap/dist/js/bootstrap.bundle.js"
-import "./navbar.css"
-function Navbar() {
+import React, { useContext, useEffect, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
+import Logo from "../../assets/images/bag_11911980.png";
+import cartIcon from "../../assets/images/shopping-cart (1).png";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle";
+import style from "./navbar.module.css";
+import signIcon from "../../assets/images/icons8-add-user-male-48.png";
 
+function Navbar() {
+  const { userData, setUserToken, setUserName } = useContext(UserContext);
+  const [productsCount, setProductsCount] = useState(0);
+  const [userImage, setUserImage] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProductCount = async () => {
+      try {
+        if (userData) {
+          const token = localStorage.getItem("userToken");
+          if (token) {
+            const response = await axios.get(
+              "https://ecommerce-node4.vercel.app/cart",
+              {
+                headers: {
+                  Authorization: `Tariq__${token}`,
+                },
+              }
+            );
+            setProductsCount(response.data.products.length);
+          } else {
+            setProductsCount(0);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching product count:", error);
+      }
+    };
+
+    const fetchUserImage = async () => {
+      try {
+        if (userData) {
+          const token = localStorage.getItem("userToken");
+          if (token) {
+            const response = await axios.get(
+              "https://ecommerce-node4.vercel.app/user/profile",
+              {
+                headers: {
+                  Authorization: `Tariq__${token}`,
+                },
+              }
+            );
+            setUserImage(response.data.user.image.secure_url);
+          } else {
+            setUserImage(null);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user image:", error);
+        setUserImage(null);
+      }
+    };
+
+    fetchProductCount();
+    fetchUserImage();
+  }, [userData]);
+
+  const handleLogout = () => {
+    setUserToken(null);
+    alert("You have been logged out.");
+    setUserName(null);
+    localStorage.removeItem("userToken");
+    navigate("/signin");
+  };
 
   return (
-    <>
-      <nav className="navbar navbar-expand-lg bg-body-secondary">
-        <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
+    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <div className="container-fluid">
+        <Link className="navbar-brand" to="/">
+          <img src={Logo} alt="logo" width={60} height={60} />
+        </Link>
 
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                      <li className="nav-item">
-                        <NavLink className="nav-link"  aria-current="page" to="/">Home</NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="nav-link"   to="products">Products</NavLink>
-                      </li>
-                      <li className="nav-item">
-                        <NavLink className="nav-link"   to="signin">Signin
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <NavLink className="nav-link" aria-current="page" to="/">
+                Home
               </NavLink>
-                      </li>
-                     <li className="nav-item">
-                        <NavLink className="nav-link"   to="signup">Signup</NavLink>
-              </li>
-              <li className="nav-item">
-                        <NavLink className="nav-link"   to="cart">Cart</NavLink>
-              </li>
-             
-                      <li className="nav-item dropdown">
-                        <NavLink className="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown"  aria-expanded="false" to="/catogeries">
-                        Categories
-                        </NavLink>
-                        <ul className="dropdown-menu">
-                       <li> <NavLink  className="dropdown-item"   to="men's fashion">Men Fashion </NavLink></li>
-                       <hr />
-                  <li><NavLink  className="dropdown-item"   to="appliances">Appliances</NavLink></li>
-                  <hr  />
-                 <li> <NavLink className="dropdown-item"  to="women's fashion">Women fashion</NavLink></li>
-                 <hr />
-                  <li><NavLink className="dropdown-item"  to="mobiles">Mobiles</NavLink></li>
-                  <hr />
-                  <li><NavLink  className="dropdown-item" to="electronics">Electronics</NavLink></li>
-                  <hr />
-                  <li><NavLink className="dropdown-item"  to="laptops & accessories">Laptops & Accessories</NavLink></li>
-                  <hr />
-                  <li><NavLink className="dropdown-item"  to="home & kitchen">Home & Kitchen</NavLink></li>
-                  <hr   />
-                  <li><NavLink className="dropdown-item"   to="fragrances">Fragrances</NavLink></li>
-                  <hr />
-                 <li> <NavLink className="dropdown-item"  to="beauty">Beauty</NavLink></li>
-              
-                        </ul>
-                      </li>
-                    </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-               
-              />
-              <button className="btn btn-outline-primary" type="submit">
-                Search
-              </button>
-            </form>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/products">
+                Products
+              </NavLink>
+            </li>
+            <li className="nav-item dropdown">
+              <NavLink
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                to="/categories"
+              >
+                Categories
+              </NavLink>
+              <ul className="dropdown-menu">
+                <li>
+                  <NavLink className="dropdown-item" to="men's fashion">
+                    Men's Fashion
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="appliances">
+                    Appliances
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="women's fashion">
+                    Women's Fashion
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="mobiles">
+                    Mobiles
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="electronics">
+                    Electronics
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="dropdown-item"
+                    to="laptops & accessories"
+                  >
+                    Laptops & Accessories
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/home & kitchen">
+                    Home & Kitchen
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="fragrances">
+                    Fragrances
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/beauty">
+                    Beauty
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div className="navbar-nav ml-auto mr-2">
+          <div className="d-flex align-items-center">
+            {!(userData.id !== null || userData.userName !== null) && (
+              <div className="nav-item">
+                <Link to="/signin">
+                  <img
+                    src={signIcon}
+                    alt="Sign In"
+                    width={40}
+                    height={50}
+                  />
+                </Link>
+              </div>
+            )}
+            {userData && userImage && (
+              <div className="nav-item dropdown">
+                <img
+                  src={userImage}
+                  alt="User"
+                  className="user-icon dropdown-toggle"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  width={30}
+                />
+                <ul className="dropdown-menu">
+                  <li>
+                    <p className="dropdown-item">{userData.userName}</p>
+                  </li>
+                  <li>
+                    <NavLink className="dropdown-item" to="/profile">
+                      Profile
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className="dropdown-item"
+                      to="/orderDe"
+                    >
+                      Order Details
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button
+                      className="dropdown-item"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+            {userData && productsCount > 0 && (
+              <div className="nav-item cartBadge">
+                <Link to="/cart">
+                  <span
+                    className={`${style.badge} rounded-pill badge-notification bg-danger`}
+                  >
+                    {productsCount}
+                  </span>
+                  <img
+                    src={cartIcon}
+                    className={style.cart}
+                    alt="Cart"
+                    width={30}
+                    height={25}
+                  />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
-      </nav>
-      
-    </>
+      </div>
+    </nav>
   );
 }
 

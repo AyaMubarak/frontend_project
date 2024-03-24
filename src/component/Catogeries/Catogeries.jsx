@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
 import axios from "axios";
 import { NavLink } from "react-router-dom";
@@ -23,26 +23,19 @@ function Catogeries() {
     fetchData();
   }, []);
 
-  
-
   return (
     <>
-      <Swiper
-        spaceBetween={130}
-        slidesPerView={5}
-      >
+      <Swiper spaceBetween={130} slidesPerView={5}>
         {categories.map((category) => (
           <SwiperSlide key={category._id}>
-       <NavLink to={category.name}>
-  <img src={category.image.secure_url} alt={category.name} />
-</NavLink>
-
+            <NavLink to={category.name}>
+              <img src={category.image.secure_url} alt={category.name} />
+            </NavLink>
           </SwiperSlide>
         ))}
       </Swiper>
     </>
   );
 }
-
 
 export default Catogeries;

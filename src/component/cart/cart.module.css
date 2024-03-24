@@ -1,0 +1,13 @@
+.btn{
+    background-color: blue;
+    width:100px;
+    height:80px;
+    border:none;
+}
+.button {
+    width:100px;
+    height:80px;
+    border:none;
+    background:none;  
+    
+}
