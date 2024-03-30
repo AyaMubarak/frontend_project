@@ -11,7 +11,7 @@ function OrderDe() {
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("userToken");
-      const response = await axios.get("https://ecommerce-node4.vercel.app/order", {
+      const response = await axios.get("https://ecommerce-node4-five.vercel.app/order", {
         headers: {
           Authorization: `Tariq__${token}`,
         },
@@ -26,7 +26,7 @@ function OrderDe() {
   const handleCancel = async (orderId) => {
     try {
       const token = localStorage.getItem("userToken");
-      await axios.patch(`https://ecommerce-node4.vercel.app/order/cancel/${orderId}`, {}, {
+      await axios.patch(`https://ecommerce-node4-five.vercel.app/order/cancel/${orderId}`, {}, {
         headers: {
           Authorization: `Tariq__${token}`
         }

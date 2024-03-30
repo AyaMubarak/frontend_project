@@ -23,7 +23,7 @@ function Laptops() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/products/category/656b5d1c7ef25cbb5771638a",
+          "https://ecommerce-node4-five.vercel.app/products/category/656b5d1c7ef25cbb5771638a",
           {
             headers: {
               Authorization: `Tariq_${token}`,

@@ -27,7 +27,7 @@ function OrderPage({ onOrderPlacement }) {
     const token = localStorage.getItem("userToken");
     try {
       const response = await axios.post(
-        "https://ecommerce-node4.vercel.app/order",
+        "https://ecommerce-node4-five.vercel.app/order",
         formData,
         {
           headers: {
@@ -53,7 +53,7 @@ function OrderPage({ onOrderPlacement }) {
 
     try {
       await axios.patch(
-        `https://ecommerce-node4.vercel.app/order/cancel/${orderId}`,
+        `https://ecommerce-node4-five.vercel.app/order/cancel/${orderId}`,
         {},
         {
           headers: {

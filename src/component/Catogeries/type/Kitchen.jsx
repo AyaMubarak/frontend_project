@@ -20,7 +20,7 @@ function Kitchen() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/products/category/656b5d2e7ef25cbb57716392"
+          "https://ecommerce-node4-five.vercel.app/products/category/656b5d2e7ef25cbb57716392"
         );
         setProducts(response.data.products || []);
         setLoading(false);

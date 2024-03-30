@@ -17,7 +17,7 @@ function ProductsDe() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://ecommerce-node4.vercel.app/products/${productId}`
+          `https://ecommerce-node4-five.vercel.app/products/${productId}`
         );
         setProduct(response.data.product || {});
         setLoading(false);
@@ -46,7 +46,7 @@ function ProductsDe() {
     try {
       const token = localStorage.getItem("userToken");
       const { data } = await axios.post(
-        `https://ecommerce-node4.vercel.app/cart`,
+        `https://ecommerce-node4-five.vercel.app/cart`,
         { productId },
         {
           headers: {
@@ -65,7 +65,7 @@ function ProductsDe() {
     try {
       const token = localStorage.getItem("userToken");
       const response = await axios.post(
-        `https://ecommerce-node4.vercel.app/products/${productId}/review`,
+        `https://ecommerce-node4-five.vercel.app/products/${productId}/review`,
         { comment, rating },
         {
           headers: {

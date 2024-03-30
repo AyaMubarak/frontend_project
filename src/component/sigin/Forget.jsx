@@ -13,7 +13,7 @@ function Forget() {
   const handleSendCode = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://ecommerce-node4.vercel.app/auth/sendcode', {
+      const response = await fetch('https://ecommerce-node4-five.vercel.app/auth/sendcode', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ function Forget() {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://ecommerce-node4.vercel.app/auth/forgotPassword', {
+      const response = await fetch('https://ecommerce-node4-five.vercel.app/auth/forgotPassword', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

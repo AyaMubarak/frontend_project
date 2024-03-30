@@ -20,7 +20,7 @@ function Fragrances() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/products/category/656b5d3f7ef25cbb57716396"
+          "https://ecommerce-node4-five.vercel.app/products/category/656b5d3f7ef25cbb57716396"
         );
         setProducts(response.data.products || []);
         setLoading(false);

@@ -20,7 +20,7 @@ function Electrincs() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/products/category/656b5d0c7ef25cbb5771637a"
+          "https://ecommerce-node4-five.vercel.app/products/category/656b5d0c7ef25cbb5771637a"
         );
         setProducts(response.data.products || []);
         setLoading(false);

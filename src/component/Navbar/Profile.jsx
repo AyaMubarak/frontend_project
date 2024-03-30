@@ -9,7 +9,7 @@ function Profile() {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("userToken");
-        const response = await axios.get("https://ecommerce-node4.vercel.app/user/profile", {
+        const response = await axios.get("https://ecommerce-node4-five.vercel.app/user/profile", {
           headers: {
             Authorization: `Tariq__${token}`,
           },

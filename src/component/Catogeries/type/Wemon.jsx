@@ -23,7 +23,7 @@ function Wemon() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/products/category/656b5ceb7ef25cbb5771636f",
+          "https://ecommerce-node4-five.vercel.app/products/category/656b5ceb7ef25cbb5771636f",
           {
             headers: {
               Authorization: `Tariq_${token}`,

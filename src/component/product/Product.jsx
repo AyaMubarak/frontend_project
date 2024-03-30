@@ -22,7 +22,7 @@ function Product() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let url = "https://ecommerce-node4.vercel.app/products?page=1&limit=10";
+        let url = "https://ecommerce-node4-five.vercel.app/products?page=1&limit=10";
         if (sortBy) {
           url += `&sort=${sortBy}`;
         }
@@ -42,7 +42,7 @@ function Product() {
     const token = localStorage.getItem("userToken");
     try {
       const { data } = await axios.post(
-        `https://ecommerce-node4.vercel.app/cart`,
+        `https://ecommerce-node4-five.vercel.app/cart`,
         { productId },
         {
           headers: {

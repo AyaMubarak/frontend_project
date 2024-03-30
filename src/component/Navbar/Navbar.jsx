@@ -18,21 +18,19 @@ function Navbar() {
   useEffect(() => {
     const fetchProductCount = async () => {
       try {
-        if (userData) {
-          const token = localStorage.getItem("userToken");
-          if (token) {
-            const response = await axios.get(
-              "https://ecommerce-node4.vercel.app/cart",
-              {
-                headers: {
-                  Authorization: `Tariq__${token}`,
-                },
-              }
-            );
-            setProductsCount(response.data.products.length);
-          } else {
-            setProductsCount(0);
-          }
+        const token = localStorage.getItem("userToken");
+        if (token) {
+          const response = await axios.get(
+            "https://ecommerce-node4-five.vercel.app/cart",
+            {
+              headers: {
+                Authorization: `Tariq__${token}`,
+              },
+            }
+          );
+          setProductsCount(response.data.products.length);
+        } else {
+          setProductsCount(0);
         }
       } catch (error) {
         console.error("Error fetching product count:", error);
@@ -41,21 +39,19 @@ function Navbar() {
 
     const fetchUserImage = async () => {
       try {
-        if (userData) {
-          const token = localStorage.getItem("userToken");
-          if (token) {
-            const response = await axios.get(
-              "https://ecommerce-node4.vercel.app/user/profile",
-              {
-                headers: {
-                  Authorization: `Tariq__${token}`,
-                },
-              }
-            );
-            setUserImage(response.data.user.image.secure_url);
-          } else {
-            setUserImage(null);
-          }
+        const token = localStorage.getItem("userToken");
+        if (token) {
+          const response = await axios.get(
+            "https://ecommerce-node4-five.vercel.app/user/profile",
+            {
+              headers: {
+                Authorization: `Tariq__${token}`,
+              },
+            }
+          );
+          setUserImage(response.data.user.image.secure_url);
+        } else {
+          setUserImage(null);
         }
       } catch (error) {
         console.error("Error fetching user image:", error);
@@ -65,12 +61,13 @@ function Navbar() {
 
     fetchProductCount();
     fetchUserImage();
-  }, [userData]);
+  }, []);
 
   const handleLogout = () => {
     setUserToken(null);
     alert("You have been logged out.");
     setUserName(null);
+    setUserImage(null); // Set user image to null
     localStorage.removeItem("userToken");
     navigate("/signin");
   };
@@ -117,131 +114,84 @@ function Navbar() {
                 Categories
               </NavLink>
               <ul className="dropdown-menu">
-                <li>
-                  <NavLink className="dropdown-item" to="men's fashion">
-                    Men's Fashion
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="appliances">
-                    Appliances
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="women's fashion">
-                    Women's Fashion
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="mobiles">
-                    Mobiles
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="electronics">
-                    Electronics
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    className="dropdown-item"
-                    to="laptops & accessories"
-                  >
-                    Laptops & Accessories
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="/home & kitchen">
-                    Home & Kitchen
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="fragrances">
-                    Fragrances
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="/beauty">
-                    Beauty
-                  </NavLink>
-                </li>
+             
               </ul>
             </li>
           </ul>
         </div>
 
         <div className="navbar-nav ml-auto mr-2">
-          <div className="d-flex align-items-center">
-            {!(userData.id !== null || userData.userName !== null) && (
-              <div className="nav-item">
-                <Link to="/signin">
-                  <img
-                    src={signIcon}
-                    alt="Sign In"
-                    width={40}
-                    height={50}
-                  />
-                </Link>
-              </div>
-            )}
-            {userData && userImage && (
-              <div className="nav-item dropdown">
-                <img
-                  src={userImage}
-                  alt="User"
-                  className="user-icon dropdown-toggle"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  width={30}
-                />
-                <ul className="dropdown-menu">
-                  <li>
-                    <p className="dropdown-item">{userData.userName}</p>
-                  </li>
-                  <li>
-                    <NavLink className="dropdown-item" to="/profile">
-                      Profile
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className="dropdown-item"
-                      to="/orderDe"
-                    >
-                      Order Details
-                    </NavLink>
-                  </li>
-                  <li>
-                    <button
-                      className="dropdown-item"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            )}
-            {userData && productsCount > 0 && (
-              <div className="nav-item cartBadge">
-                <Link to="/cart">
-                  <span
-                    className={`${style.badge} rounded-pill badge-notification bg-danger`}
+        
+          {userImage ? (
+            <div className="nav-item dropdown">
+              <img
+                src={userImage}
+                alt="User"
+                className="user-icon dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                width={30}
+              />
+              <ul className="dropdown-menu">
+                <li>
+                  <p className="dropdown-item">{userData.userName}</p>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/profile">
+                    Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="dropdown-item"
+                    to="/orderDe"
                   >
-                    {productsCount}
-                  </span>
-                  <img
-                    src={cartIcon}
-                    className={style.cart}
-                    alt="Cart"
-                    width={30}
-                    height={25}
-                  />
-                </Link>
-              </div>
-            )}
-          </div>
+                    Order Details
+                  </NavLink>
+                </li>
+                <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <div className="nav-item">
+              <Link to="/signin">
+                <img
+                  src={signIcon}
+                  alt="Sign In"
+                  width={40}
+                  height={50}
+                />
+              </Link>
+            </div>
+          )}
+
+         
+          {userImage && (
+            <div className="nav-item cartBadge">
+              <Link to="/cart">
+                <span
+                  className={`${style.badge} rounded-pill badge-notification bg-danger`}
+                >
+                  {productsCount}
+                </span>
+                <img
+                  src={cartIcon}
+                  className={style.cart}
+                  alt="Cart"
+                  width={30}
+                  height={25}
+                />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

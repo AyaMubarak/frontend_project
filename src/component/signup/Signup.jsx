@@ -22,7 +22,7 @@ function Signup() {
       formDataToSend.append('password', formData.password);
       formDataToSend.append('image', formData.image);
 
-      const response = await axios.post('https://ecommerce-node4.vercel.app/auth/signup', formDataToSend);
+      const response = await axios.post('https://ecommerce-node4-five.vercel.app/auth/signup', formDataToSend);
 
       if (response.status === 201 && response.data.message === 'success') {
 

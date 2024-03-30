@@ -12,7 +12,7 @@ function Catogeries() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/categories/active?page=1&limit=10"
+          "https://ecommerce-node4-five.vercel.app/categories/active?page=1&limit=10"
         );
         setCategories(response.data.categories);
       } catch (error) {

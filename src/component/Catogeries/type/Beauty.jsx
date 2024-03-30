@@ -23,7 +23,7 @@ function Beauty() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/products/category/656b5d4f7ef25cbb577163a0",
+          "https://ecommerce-node4-five.vercel.app/products/category/656b5d4f7ef25cbb577163a0",
           {
             headers: {
               Authorization: `Tariq_${token}`,

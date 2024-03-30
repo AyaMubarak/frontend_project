@@ -36,7 +36,7 @@ export default function CartPage() {
       const token = localStorage.getItem("userToken");
       try {
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/cart",
+          "https://ecommerce-node4-five.vercel.app/cart",
           {
             headers: {
               Authorization: `Tariq__${token}`,
@@ -64,7 +64,7 @@ export default function CartPage() {
     const token = localStorage.getItem("userToken");
     try {
       await axios.patch(
-        "https://ecommerce-node4.vercel.app/cart/removeItem",
+        "https://ecommerce-node4-five.vercel.app/cart/removeItem",
         { productId },
         { headers: { Authorization: `Tariq__${token}` } }
       );
@@ -87,7 +87,7 @@ export default function CartPage() {
     const token = localStorage.getItem("userToken");
     try {
       await axios.patch(
-        `https://ecommerce-node4.vercel.app/cart/clear`,
+        `https://ecommerce-node4-five.vercel.app/cart/clear`,
         {},
         {
           headers: {
@@ -110,7 +110,7 @@ export default function CartPage() {
     const token = localStorage.getItem("userToken");
     try {
       await axios.patch(
-        `https://ecommerce-node4.vercel.app/cart/decraseQuantity`,
+        `https://ecommerce-node4-five.vercel.app/cart/decraseQuantity`,
         { productId },
         {
           headers: {
@@ -141,7 +141,7 @@ export default function CartPage() {
     const token = localStorage.getItem("userToken");
     try {
       await axios.patch(
-        `https://ecommerce-node4.vercel.app/cart/incraseQuantity`,
+        `https://ecommerce-node4-five.vercel.app/cart/incraseQuantity`,
         { productId },
         {
           headers: {

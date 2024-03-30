@@ -23,7 +23,7 @@ function Appliances() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          "https://ecommerce-node4.vercel.app/products/category/656b5cc47ef25cbb5771636b",
+          "https://ecommerce-node4-five.vercel.app/products/category/656b5cc47ef25cbb5771636b",
           {
             headers: {
               Authorization: `Tariq_${token}`,
