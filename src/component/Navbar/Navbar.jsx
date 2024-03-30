@@ -67,7 +67,7 @@ function Navbar() {
     setUserToken(null);
     alert("You have been logged out.");
     setUserName(null);
-    setUserImage(null); // Set user image to null
+    setUserImage(null); 
     localStorage.removeItem("userToken");
     navigate("/signin");
   };
@@ -114,7 +114,55 @@ function Navbar() {
                 Categories
               </NavLink>
               <ul className="dropdown-menu">
-             
+               <li>
+                  <NavLink className="dropdown-item" to="men's fashion">
+                    Men's Fashion
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="appliances">
+                    Appliances
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="women's fashion">
+                    Women's Fashion
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="mobiles">
+                    Mobiles
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="electronics">
+                    Electronics
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="dropdown-item"
+                    to="laptops & accessories"
+                  >
+                    Laptops & Accessories
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/home & kitchen">
+                    Home & Kitchen
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="fragrances">
+                    Fragrances
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/beauty">
+                    Beauty
+                  </NavLink>
+                </li>
+            
               </ul>
             </li>
           </ul>
